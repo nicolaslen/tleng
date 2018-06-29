@@ -48,36 +48,42 @@ tokens = [
 #     'false' : 'FALSE'
 # }
 
-tokens += reserved_tokens.values()
+# tokens += reserved_tokens.values()
 
 
-t_BACKSLASH = r'\\'
 
-def t_VAR(t):
-    r'[a-z][a-zA-Z0-9]*'
-    if t.value in reserved_tokens:
-        t.type = reserved_tokens[t.value]
-    return t
 
 # Default state tokens
-  t_BEGIN_ARRAY          = r'\['                  # '['
-  t_BEGIN_OBJECT         = r'\{'                  # '{'
-  t_END_ARRAY            = r'\]'                  # ']'
-  t_END_OBJECT           = r'\}'                  # '}'
-  t_NAME_SEPARATOR       = r'\:'                  # ':'
-  t_VALUE_SEPARATOR      = r'\,'                  # ','
-  t_FALSE                = r'false'  # 'false'
-  t_TRUE                 = r'true'      # 'true'
-  t_NULL                 = r'null'      # 'null'
-  t_DECIMAL_POINT        = r'\.'                  # '.'
-  t_DIGITS               = r'[0-9]+'          # '0'..'9'
-  t_E                    = r'[eE]'            # 'e' or 'E'
-  t_MINUS                = r'\-'                  # '-'
-  t_PLUS                 = r'\+'                  # '+'
-  t_ZERO                 = r'\0'                  # '0'
+  t_BEGIN_ARRAY          = r'\['
+  t_BEGIN_OBJECT         = r'\{'
+  t_END_ARRAY            = r'\]'
+  t_END_OBJECT           = r'\}'
+  t_NAME_SEPARATOR       = r'\:'
+  t_VALUE_SEPARATOR      = r'\,'
+  t_FALSE                = r'false'
+  t_TRUE                 = r'true'
+  t_NULL                 = r'null'
+  t_DECIMAL_POINT        = r'\.'
+  t_DIGITS               = r'[0-9]+'
+  t_E                    = r'[eE]'
+  t_MINUS                = r'\-'
+  t_PLUS                 = r'\+'
+  t_ZERO                 = r'\0'
 
 
 t_ignore = '\s\t\n\r'
+
+# Enters the string state on an opening quotation mark 
+def t_QUOTATION_MARK(self, t):
+  r'\"'
+  t.lexer.push_state('string') 
+  return t
+	
+# Exits the string state on an unescaped closing quotation mark
+def t_string_QUOTATION_MARK(self, t):
+  r'\"'
+  t.lexer.pop_state()
+  return t
 
 
 def t_error(t):
