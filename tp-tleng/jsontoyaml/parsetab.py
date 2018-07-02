@@ -5,9 +5,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'BACKSLASH VAR COLON TYPE DOT ZERO R_PAREN L_PAREN ARROW THEN SUCC FALSE IS_ZERO PRED ELSE TRUE IFexpression : absExpressionabsExpression : BACKSLASH varExpression COLON typeExpression DOT expressionabsExpression : ifExpressionifExpression : IF expression THEN expression ELSE expressionifExpression : appExpressionappExpression : appExpression termExpressionappExpression : termExpressiontermExpression : varExpressiontermExpression : functionExpressionvarExpression : VARfunctionExpression : SUCC L_PAREN expression R_PARENfunctionExpression : PRED L_PAREN expression R_PARENfunctionExpression : IS_ZERO L_PAREN expression R_PARENfunctionExpression : valExpressionvalExpression : TRUEvalExpression : FALSEvalExpression : ZEROvalExpression : L_PAREN expression R_PARENtypeExpression : TYPE ARROW typeExpressiontypeExpression : TYPE'
+_lr_signature = 'BEGIN_ARRAY BEGIN_OBJECT END_ARRAY END_OBJECT NAME_SEPARATOR VALUE_SEPARATOR QUOTATION_MARK FALSE TRUE NULL DECIMAL_POINT DIGITS E MINUS PLUS ZERO STRINGvalue : stringvalue : FALSEvalue : TRUEvalue : NULLvalue : numbervalue : objectvalue : arrayelements : valueelements : value VALUE_SEPARATOR elementsobject : BEGIN_OBJECT members END_OBJECTobject : BEGIN_OBJECT END_OBJECTmembers : pairmembers : pair VALUE_SEPARATOR memberspair : string NAME_SEPARATOR valuearray : BEGIN_ARRAY END_ARRAYarray : BEGIN_ARRAY elements END_ARRAYnumber : DIGITSstring : QUOTATION_MARK STRING QUOTATION_MARK'
     
-_lr_action_items = {'THEN':([1,4,5,7,9,10,11,12,14,16,17,23,24,26,32,35,37,41,43,],[-8,-15,-3,-7,-5,-9,-17,-10,-16,-1,-14,-6,30,-18,-11,-13,-12,-2,-4,]),'L_PAREN':([0,1,2,3,4,7,8,9,10,11,12,13,14,15,17,20,22,23,25,26,30,32,35,37,38,40,],[2,-8,2,20,-15,-7,22,2,-9,-17,-10,2,-16,25,-14,2,2,-6,2,-18,2,-11,-13,-12,2,2,]),'FALSE':([0,1,2,4,7,9,10,11,12,13,14,17,20,22,23,25,26,30,32,35,37,38,40,],[14,-8,14,-15,-7,14,-9,-17,-10,14,-16,-14,14,14,-6,14,-18,14,-11,-13,-12,14,14,]),'ARROW':([34,],[39,]),'PRED':([0,1,2,4,7,9,10,11,12,13,14,17,20,22,23,25,26,30,32,35,37,38,40,],[15,-8,15,-15,-7,15,-9,-17,-10,15,-16,-14,15,15,-6,15,-18,15,-11,-13,-12,15,15,]),'SUCC':([0,1,2,4,7,9,10,11,12,13,14,17,20,22,23,25,26,30,32,35,37,38,40,],[3,-8,3,-15,-7,3,-9,-17,-10,3,-16,-14,3,3,-6,3,-18,3,-11,-13,-12,3,3,]),'BACKSLASH':([0,2,13,20,22,25,30,38,40,],[6,6,6,6,6,6,6,6,6,]),'R_PAREN':([1,4,5,7,9,10,11,12,14,16,17,19,23,26,27,29,31,32,35,37,41,43,],[-8,-15,-3,-7,-5,-9,-17,-10,-16,-1,-14,26,-6,-18,32,35,37,-11,-13,-12,-2,-4,]),'ZERO':([0,1,2,4,7,9,10,11,12,13,14,17,20,22,23,25,26,30,32,35,37,38,40,],[11,-8,11,-15,-7,11,-9,-17,-10,11,-16,-14,11,11,-6,11,-18,11,-11,-13,-12,11,11,]),'COLON':([12,21,],[-10,28,]),'IS_ZERO':([0,1,2,4,7,9,10,11,12,13,14,17,20,22,23,25,26,30,32,35,37,38,40,],[8,-8,8,-15,-7,8,-9,-17,-10,8,-16,-14,8,8,-6,8,-18,8,-11,-13,-12,8,8,]),'VAR':([0,1,2,4,6,7,9,10,11,12,13,14,17,20,22,23,25,26,30,32,35,37,38,40,],[12,-8,12,-15,12,-7,12,-9,-17,-10,12,-16,-14,12,12,-6,12,-18,12,-11,-13,-12,12,12,]),'TYPE':([28,39,],[34,34,]),'ELSE':([1,4,5,7,9,10,11,12,14,16,17,23,26,32,35,36,37,41,43,],[-8,-15,-3,-7,-5,-9,-17,-10,-16,-1,-14,-6,-18,-11,-13,40,-12,-2,-4,]),'TRUE':([0,1,2,4,7,9,10,11,12,13,14,17,20,22,23,25,26,30,32,35,37,38,40,],[4,-8,4,-15,-7,4,-9,-17,-10,4,-16,-14,4,4,-6,4,-18,4,-11,-13,-12,4,4,]),'$end':([1,4,5,7,9,10,11,12,14,16,17,18,23,26,32,35,37,41,43,],[-8,-15,-3,-7,-5,-9,-17,-10,-16,-1,-14,0,-6,-18,-11,-13,-12,-2,-4,]),'DOT':([33,34,42,],[38,-20,-19,]),'IF':([0,2,13,20,22,25,30,38,40,],[13,13,13,13,13,13,13,13,13,]),}
+_lr_action_items = {'DIGITS':([0,5,23,25,],[1,1,1,1,]),'VALUE_SEPARATOR':([1,3,4,6,7,10,11,12,13,15,18,19,21,24,26,28,],[-17,-2,-1,-6,-5,-7,-4,-3,-11,22,-15,25,-10,-16,-18,-14,]),'BEGIN_OBJECT':([0,5,23,25,],[2,2,2,2,]),'FALSE':([0,5,23,25,],[3,3,3,3,]),'END_OBJECT':([1,2,3,4,6,7,10,11,12,13,14,15,18,21,24,26,27,28,],[-17,13,-2,-1,-6,-5,-7,-4,-3,-11,21,-12,-15,-10,-16,-18,-13,-14,]),'BEGIN_ARRAY':([0,5,23,25,],[5,5,5,5,]),'NAME_SEPARATOR':([16,26,],[23,-18,]),'QUOTATION_MARK':([0,2,5,20,22,23,25,],[9,9,9,26,9,9,9,]),'END_ARRAY':([1,3,4,5,6,7,10,11,12,13,17,18,19,21,24,26,29,],[-17,-2,-1,18,-6,-5,-7,-4,-3,-11,24,-15,-8,-10,-16,-18,-9,]),'STRING':([9,],[20,]),'NULL':([0,5,23,25,],[11,11,11,11,]),'TRUE':([0,5,23,25,],[12,12,12,12,]),'$end':([1,3,4,6,7,8,10,11,12,13,18,21,24,26,],[-17,-2,-1,-6,-5,0,-7,-4,-3,-11,-15,-10,-16,-18,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'varExpression':([0,2,6,9,13,20,22,25,30,38,40,],[1,1,21,1,1,1,1,1,1,1,1,]),'typeExpression':([28,39,],[33,42,]),'appExpression':([0,2,13,20,22,25,30,38,40,],[9,9,9,9,9,9,9,9,9,]),'absExpression':([0,2,13,20,22,25,30,38,40,],[16,16,16,16,16,16,16,16,16,]),'functionExpression':([0,2,9,13,20,22,25,30,38,40,],[10,10,10,10,10,10,10,10,10,10,]),'termExpression':([0,2,9,13,20,22,25,30,38,40,],[7,7,23,7,7,7,7,7,7,7,]),'valExpression':([0,2,9,13,20,22,25,30,38,40,],[17,17,17,17,17,17,17,17,17,17,]),'expression':([0,2,13,20,22,25,30,38,40,],[18,19,24,27,29,31,36,41,43,]),'ifExpression':([0,2,13,20,22,25,30,38,40,],[5,5,5,5,5,5,5,5,5,]),}
+_lr_goto_items = {'elements':([5,25,],[17,29,]),'string':([0,2,5,22,23,25,],[4,16,4,16,4,4,]),'object':([0,5,23,25,],[6,6,6,6,]),'number':([0,5,23,25,],[7,7,7,7,]),'value':([0,5,23,25,],[8,19,28,19,]),'members':([2,22,],[14,27,]),'pair':([2,22,],[15,15,]),'array':([0,5,23,25,],[10,10,10,10,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -25,25 +25,23 @@ for _k, _v in _lr_goto_items.items():
        _lr_goto[_x][_k] = _y
 del _lr_goto_items
 _lr_productions = [
-  ("S' -> expression","S'",1,None,None,None),
-  ('expression -> absExpression','expression',1,'p_expression','parser.py',10),
-  ('absExpression -> BACKSLASH varExpression COLON typeExpression DOT expression','absExpression',6,'p_abstraction_expression','parser.py',14),
-  ('absExpression -> ifExpression','absExpression',1,'p_abstraction_if_expression','parser.py',18),
-  ('ifExpression -> IF expression THEN expression ELSE expression','ifExpression',6,'p_if_expression','parser.py',22),
-  ('ifExpression -> appExpression','ifExpression',1,'p_if_application_expression','parser.py',26),
-  ('appExpression -> appExpression termExpression','appExpression',2,'p_application_expression','parser.py',30),
-  ('appExpression -> termExpression','appExpression',1,'p_application_term_expression','parser.py',34),
-  ('termExpression -> varExpression','termExpression',1,'p_term_var_expression','parser.py',38),
-  ('termExpression -> functionExpression','termExpression',1,'p_term_function_expression','parser.py',42),
-  ('varExpression -> VAR','varExpression',1,'p_var_expression','parser.py',46),
-  ('functionExpression -> SUCC L_PAREN expression R_PAREN','functionExpression',4,'p_function_succ_expression','parser.py',50),
-  ('functionExpression -> PRED L_PAREN expression R_PAREN','functionExpression',4,'p_function_pred_expression','parser.py',54),
-  ('functionExpression -> IS_ZERO L_PAREN expression R_PAREN','functionExpression',4,'p_function_is_zero_expression','parser.py',58),
-  ('functionExpression -> valExpression','functionExpression',1,'p_function_val_expression','parser.py',62),
-  ('valExpression -> TRUE','valExpression',1,'p_val_true_expression','parser.py',66),
-  ('valExpression -> FALSE','valExpression',1,'p_val_false_expression','parser.py',70),
-  ('valExpression -> ZERO','valExpression',1,'p_val_zero_expression','parser.py',74),
-  ('valExpression -> L_PAREN expression R_PAREN','valExpression',3,'p_val_expression_expression','parser.py',78),
-  ('typeExpression -> TYPE ARROW typeExpression','typeExpression',3,'p_type_function_expression','parser.py',82),
-  ('typeExpression -> TYPE','typeExpression',1,'p_type_basic_expression','parser.py',86),
+  ("S' -> value","S'",1,None,None,None),
+  ('value -> string','value',1,'p_expression_value_string','parser.py',9),
+  ('value -> FALSE','value',1,'p_expression_value_false','parser.py',12),
+  ('value -> TRUE','value',1,'p_expression_value_true','parser.py',15),
+  ('value -> NULL','value',1,'p_expression_value_null','parser.py',18),
+  ('value -> number','value',1,'p_expression_value_number','parser.py',21),
+  ('value -> object','value',1,'p_expression_value_object','parser.py',24),
+  ('value -> array','value',1,'p_expression_value_array','parser.py',27),
+  ('elements -> value','elements',1,'p_expression_elements_value','parser.py',30),
+  ('elements -> value VALUE_SEPARATOR elements','elements',3,'p_expression_elements_list','parser.py',33),
+  ('object -> BEGIN_OBJECT members END_OBJECT','object',3,'p_expression_object','parser.py',36),
+  ('object -> BEGIN_OBJECT END_OBJECT','object',2,'p_expression_object_empty','parser.py',39),
+  ('members -> pair','members',1,'p_expression_members','parser.py',42),
+  ('members -> pair VALUE_SEPARATOR members','members',3,'p_expression_members_list','parser.py',45),
+  ('pair -> string NAME_SEPARATOR value','pair',3,'p_expression_pair','parser.py',48),
+  ('array -> BEGIN_ARRAY END_ARRAY','array',2,'p_expression_array_empty','parser.py',51),
+  ('array -> BEGIN_ARRAY elements END_ARRAY','array',3,'p_expression_array_list','parser.py',54),
+  ('number -> DIGITS','number',1,'p_expression_number','parser.py',57),
+  ('string -> QUOTATION_MARK STRING QUOTATION_MARK','string',3,'p_expression_string','parser.py',60),
 ]

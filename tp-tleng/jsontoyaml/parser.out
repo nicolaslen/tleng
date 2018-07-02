@@ -1,0 +1,439 @@
+Created by PLY version 3.10 (http://www.dabeaz.com/ply)
+
+Unused terminals:
+
+    E
+    ZERO
+    PLUS
+    DECIMAL_POINT
+    MINUS
+
+Grammar
+
+Rule 0     S' -> value
+Rule 1     value -> string
+Rule 2     value -> FALSE
+Rule 3     value -> TRUE
+Rule 4     value -> NULL
+Rule 5     value -> number
+Rule 6     value -> object
+Rule 7     value -> array
+Rule 8     elements -> value
+Rule 9     elements -> value VALUE_SEPARATOR elements
+Rule 10    object -> BEGIN_OBJECT members END_OBJECT
+Rule 11    object -> BEGIN_OBJECT END_OBJECT
+Rule 12    members -> pair
+Rule 13    members -> pair VALUE_SEPARATOR members
+Rule 14    pair -> string NAME_SEPARATOR value
+Rule 15    array -> BEGIN_ARRAY END_ARRAY
+Rule 16    array -> BEGIN_ARRAY elements END_ARRAY
+Rule 17    number -> DIGITS
+Rule 18    string -> QUOTATION_MARK STRING QUOTATION_MARK
+
+Terminals, with rules where they appear
+
+BEGIN_ARRAY          : 15 16
+BEGIN_OBJECT         : 10 11
+DECIMAL_POINT        : 
+DIGITS               : 17
+E                    : 
+END_ARRAY            : 15 16
+END_OBJECT           : 10 11
+FALSE                : 2
+MINUS                : 
+NAME_SEPARATOR       : 14
+NULL                 : 4
+PLUS                 : 
+QUOTATION_MARK       : 18 18
+STRING               : 18
+TRUE                 : 3
+VALUE_SEPARATOR      : 9 13
+ZERO                 : 
+error                : 
+
+Nonterminals, with rules where they appear
+
+array                : 7
+elements             : 9 16
+members              : 10 13
+number               : 5
+object               : 6
+pair                 : 12 13
+string               : 1 14
+value                : 8 9 14 0
+
+Parsing method: LALR
+
+state 0
+
+    (0) S' -> . value
+    (1) value -> . string
+    (2) value -> . FALSE
+    (3) value -> . TRUE
+    (4) value -> . NULL
+    (5) value -> . number
+    (6) value -> . object
+    (7) value -> . array
+    (18) string -> . QUOTATION_MARK STRING QUOTATION_MARK
+    (17) number -> . DIGITS
+    (10) object -> . BEGIN_OBJECT members END_OBJECT
+    (11) object -> . BEGIN_OBJECT END_OBJECT
+    (15) array -> . BEGIN_ARRAY END_ARRAY
+    (16) array -> . BEGIN_ARRAY elements END_ARRAY
+
+    FALSE           shift and go to state 3
+    TRUE            shift and go to state 12
+    NULL            shift and go to state 11
+    QUOTATION_MARK  shift and go to state 9
+    DIGITS          shift and go to state 1
+    BEGIN_OBJECT    shift and go to state 2
+    BEGIN_ARRAY     shift and go to state 5
+
+    string                         shift and go to state 4
+    object                         shift and go to state 6
+    number                         shift and go to state 7
+    value                          shift and go to state 8
+    array                          shift and go to state 10
+
+state 1
+
+    (17) number -> DIGITS .
+
+    VALUE_SEPARATOR reduce using rule 17 (number -> DIGITS .)
+    END_ARRAY       reduce using rule 17 (number -> DIGITS .)
+    $end            reduce using rule 17 (number -> DIGITS .)
+    END_OBJECT      reduce using rule 17 (number -> DIGITS .)
+
+
+state 2
+
+    (10) object -> BEGIN_OBJECT . members END_OBJECT
+    (11) object -> BEGIN_OBJECT . END_OBJECT
+    (12) members -> . pair
+    (13) members -> . pair VALUE_SEPARATOR members
+    (14) pair -> . string NAME_SEPARATOR value
+    (18) string -> . QUOTATION_MARK STRING QUOTATION_MARK
+
+    END_OBJECT      shift and go to state 13
+    QUOTATION_MARK  shift and go to state 9
+
+    pair                           shift and go to state 15
+    string                         shift and go to state 16
+    members                        shift and go to state 14
+
+state 3
+
+    (2) value -> FALSE .
+
+    VALUE_SEPARATOR reduce using rule 2 (value -> FALSE .)
+    END_ARRAY       reduce using rule 2 (value -> FALSE .)
+    $end            reduce using rule 2 (value -> FALSE .)
+    END_OBJECT      reduce using rule 2 (value -> FALSE .)
+
+
+state 4
+
+    (1) value -> string .
+
+    VALUE_SEPARATOR reduce using rule 1 (value -> string .)
+    END_ARRAY       reduce using rule 1 (value -> string .)
+    $end            reduce using rule 1 (value -> string .)
+    END_OBJECT      reduce using rule 1 (value -> string .)
+
+
+state 5
+
+    (15) array -> BEGIN_ARRAY . END_ARRAY
+    (16) array -> BEGIN_ARRAY . elements END_ARRAY
+    (8) elements -> . value
+    (9) elements -> . value VALUE_SEPARATOR elements
+    (1) value -> . string
+    (2) value -> . FALSE
+    (3) value -> . TRUE
+    (4) value -> . NULL
+    (5) value -> . number
+    (6) value -> . object
+    (7) value -> . array
+    (18) string -> . QUOTATION_MARK STRING QUOTATION_MARK
+    (17) number -> . DIGITS
+    (10) object -> . BEGIN_OBJECT members END_OBJECT
+    (11) object -> . BEGIN_OBJECT END_OBJECT
+    (15) array -> . BEGIN_ARRAY END_ARRAY
+    (16) array -> . BEGIN_ARRAY elements END_ARRAY
+
+    END_ARRAY       shift and go to state 18
+    FALSE           shift and go to state 3
+    TRUE            shift and go to state 12
+    NULL            shift and go to state 11
+    QUOTATION_MARK  shift and go to state 9
+    DIGITS          shift and go to state 1
+    BEGIN_OBJECT    shift and go to state 2
+    BEGIN_ARRAY     shift and go to state 5
+
+    elements                       shift and go to state 17
+    string                         shift and go to state 4
+    object                         shift and go to state 6
+    number                         shift and go to state 7
+    value                          shift and go to state 19
+    array                          shift and go to state 10
+
+state 6
+
+    (6) value -> object .
+
+    VALUE_SEPARATOR reduce using rule 6 (value -> object .)
+    END_ARRAY       reduce using rule 6 (value -> object .)
+    $end            reduce using rule 6 (value -> object .)
+    END_OBJECT      reduce using rule 6 (value -> object .)
+
+
+state 7
+
+    (5) value -> number .
+
+    VALUE_SEPARATOR reduce using rule 5 (value -> number .)
+    END_ARRAY       reduce using rule 5 (value -> number .)
+    $end            reduce using rule 5 (value -> number .)
+    END_OBJECT      reduce using rule 5 (value -> number .)
+
+
+state 8
+
+    (0) S' -> value .
+
+
+
+state 9
+
+    (18) string -> QUOTATION_MARK . STRING QUOTATION_MARK
+
+    STRING          shift and go to state 20
+
+
+state 10
+
+    (7) value -> array .
+
+    VALUE_SEPARATOR reduce using rule 7 (value -> array .)
+    END_ARRAY       reduce using rule 7 (value -> array .)
+    $end            reduce using rule 7 (value -> array .)
+    END_OBJECT      reduce using rule 7 (value -> array .)
+
+
+state 11
+
+    (4) value -> NULL .
+
+    VALUE_SEPARATOR reduce using rule 4 (value -> NULL .)
+    END_ARRAY       reduce using rule 4 (value -> NULL .)
+    $end            reduce using rule 4 (value -> NULL .)
+    END_OBJECT      reduce using rule 4 (value -> NULL .)
+
+
+state 12
+
+    (3) value -> TRUE .
+
+    VALUE_SEPARATOR reduce using rule 3 (value -> TRUE .)
+    END_ARRAY       reduce using rule 3 (value -> TRUE .)
+    $end            reduce using rule 3 (value -> TRUE .)
+    END_OBJECT      reduce using rule 3 (value -> TRUE .)
+
+
+state 13
+
+    (11) object -> BEGIN_OBJECT END_OBJECT .
+
+    VALUE_SEPARATOR reduce using rule 11 (object -> BEGIN_OBJECT END_OBJECT .)
+    END_ARRAY       reduce using rule 11 (object -> BEGIN_OBJECT END_OBJECT .)
+    END_OBJECT      reduce using rule 11 (object -> BEGIN_OBJECT END_OBJECT .)
+    $end            reduce using rule 11 (object -> BEGIN_OBJECT END_OBJECT .)
+
+
+state 14
+
+    (10) object -> BEGIN_OBJECT members . END_OBJECT
+
+    END_OBJECT      shift and go to state 21
+
+
+state 15
+
+    (12) members -> pair .
+    (13) members -> pair . VALUE_SEPARATOR members
+
+    END_OBJECT      reduce using rule 12 (members -> pair .)
+    VALUE_SEPARATOR shift and go to state 22
+
+
+state 16
+
+    (14) pair -> string . NAME_SEPARATOR value
+
+    NAME_SEPARATOR  shift and go to state 23
+
+
+state 17
+
+    (16) array -> BEGIN_ARRAY elements . END_ARRAY
+
+    END_ARRAY       shift and go to state 24
+
+
+state 18
+
+    (15) array -> BEGIN_ARRAY END_ARRAY .
+
+    VALUE_SEPARATOR reduce using rule 15 (array -> BEGIN_ARRAY END_ARRAY .)
+    END_ARRAY       reduce using rule 15 (array -> BEGIN_ARRAY END_ARRAY .)
+    END_OBJECT      reduce using rule 15 (array -> BEGIN_ARRAY END_ARRAY .)
+    $end            reduce using rule 15 (array -> BEGIN_ARRAY END_ARRAY .)
+
+
+state 19
+
+    (8) elements -> value .
+    (9) elements -> value . VALUE_SEPARATOR elements
+
+    END_ARRAY       reduce using rule 8 (elements -> value .)
+    VALUE_SEPARATOR shift and go to state 25
+
+
+state 20
+
+    (18) string -> QUOTATION_MARK STRING . QUOTATION_MARK
+
+    QUOTATION_MARK  shift and go to state 26
+
+
+state 21
+
+    (10) object -> BEGIN_OBJECT members END_OBJECT .
+
+    VALUE_SEPARATOR reduce using rule 10 (object -> BEGIN_OBJECT members END_OBJECT .)
+    END_ARRAY       reduce using rule 10 (object -> BEGIN_OBJECT members END_OBJECT .)
+    END_OBJECT      reduce using rule 10 (object -> BEGIN_OBJECT members END_OBJECT .)
+    $end            reduce using rule 10 (object -> BEGIN_OBJECT members END_OBJECT .)
+
+
+state 22
+
+    (13) members -> pair VALUE_SEPARATOR . members
+    (12) members -> . pair
+    (13) members -> . pair VALUE_SEPARATOR members
+    (14) pair -> . string NAME_SEPARATOR value
+    (18) string -> . QUOTATION_MARK STRING QUOTATION_MARK
+
+    QUOTATION_MARK  shift and go to state 9
+
+    pair                           shift and go to state 15
+    string                         shift and go to state 16
+    members                        shift and go to state 27
+
+state 23
+
+    (14) pair -> string NAME_SEPARATOR . value
+    (1) value -> . string
+    (2) value -> . FALSE
+    (3) value -> . TRUE
+    (4) value -> . NULL
+    (5) value -> . number
+    (6) value -> . object
+    (7) value -> . array
+    (18) string -> . QUOTATION_MARK STRING QUOTATION_MARK
+    (17) number -> . DIGITS
+    (10) object -> . BEGIN_OBJECT members END_OBJECT
+    (11) object -> . BEGIN_OBJECT END_OBJECT
+    (15) array -> . BEGIN_ARRAY END_ARRAY
+    (16) array -> . BEGIN_ARRAY elements END_ARRAY
+
+    FALSE           shift and go to state 3
+    TRUE            shift and go to state 12
+    NULL            shift and go to state 11
+    QUOTATION_MARK  shift and go to state 9
+    DIGITS          shift and go to state 1
+    BEGIN_OBJECT    shift and go to state 2
+    BEGIN_ARRAY     shift and go to state 5
+
+    string                         shift and go to state 4
+    object                         shift and go to state 6
+    number                         shift and go to state 7
+    value                          shift and go to state 28
+    array                          shift and go to state 10
+
+state 24
+
+    (16) array -> BEGIN_ARRAY elements END_ARRAY .
+
+    VALUE_SEPARATOR reduce using rule 16 (array -> BEGIN_ARRAY elements END_ARRAY .)
+    END_ARRAY       reduce using rule 16 (array -> BEGIN_ARRAY elements END_ARRAY .)
+    END_OBJECT      reduce using rule 16 (array -> BEGIN_ARRAY elements END_ARRAY .)
+    $end            reduce using rule 16 (array -> BEGIN_ARRAY elements END_ARRAY .)
+
+
+state 25
+
+    (9) elements -> value VALUE_SEPARATOR . elements
+    (8) elements -> . value
+    (9) elements -> . value VALUE_SEPARATOR elements
+    (1) value -> . string
+    (2) value -> . FALSE
+    (3) value -> . TRUE
+    (4) value -> . NULL
+    (5) value -> . number
+    (6) value -> . object
+    (7) value -> . array
+    (18) string -> . QUOTATION_MARK STRING QUOTATION_MARK
+    (17) number -> . DIGITS
+    (10) object -> . BEGIN_OBJECT members END_OBJECT
+    (11) object -> . BEGIN_OBJECT END_OBJECT
+    (15) array -> . BEGIN_ARRAY END_ARRAY
+    (16) array -> . BEGIN_ARRAY elements END_ARRAY
+
+    FALSE           shift and go to state 3
+    TRUE            shift and go to state 12
+    NULL            shift and go to state 11
+    QUOTATION_MARK  shift and go to state 9
+    DIGITS          shift and go to state 1
+    BEGIN_OBJECT    shift and go to state 2
+    BEGIN_ARRAY     shift and go to state 5
+
+    elements                       shift and go to state 29
+    string                         shift and go to state 4
+    object                         shift and go to state 6
+    number                         shift and go to state 7
+    value                          shift and go to state 19
+    array                          shift and go to state 10
+
+state 26
+
+    (18) string -> QUOTATION_MARK STRING QUOTATION_MARK .
+
+    VALUE_SEPARATOR reduce using rule 18 (string -> QUOTATION_MARK STRING QUOTATION_MARK .)
+    END_OBJECT      reduce using rule 18 (string -> QUOTATION_MARK STRING QUOTATION_MARK .)
+    NAME_SEPARATOR  reduce using rule 18 (string -> QUOTATION_MARK STRING QUOTATION_MARK .)
+    END_ARRAY       reduce using rule 18 (string -> QUOTATION_MARK STRING QUOTATION_MARK .)
+    $end            reduce using rule 18 (string -> QUOTATION_MARK STRING QUOTATION_MARK .)
+
+
+state 27
+
+    (13) members -> pair VALUE_SEPARATOR members .
+
+    END_OBJECT      reduce using rule 13 (members -> pair VALUE_SEPARATOR members .)
+
+
+state 28
+
+    (14) pair -> string NAME_SEPARATOR value .
+
+    VALUE_SEPARATOR reduce using rule 14 (pair -> string NAME_SEPARATOR value .)
+    END_OBJECT      reduce using rule 14 (pair -> string NAME_SEPARATOR value .)
+
+
+state 29
+
+    (9) elements -> value VALUE_SEPARATOR elements .
+
+    END_ARRAY       reduce using rule 9 (elements -> value VALUE_SEPARATOR elements .)
+

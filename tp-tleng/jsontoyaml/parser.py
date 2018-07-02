@@ -1,91 +1,76 @@
 #! coding: utf-8
-"""Parser lambda calculo."""
+"""Parser JSON to YAML."""
 import ply.yacc as yacc
-from .lexer import tokens
+from lexer import tokens
 from types import *
 from expressions import *
 
+def p_expression_value_string(subexpr):
+  'value : string'
+  subexpr[0] = ValueExpression(subexpr[1])
+  
+def p_expression_value_false(subexpr):
+  'value : FALSE'
+  subexpr[0] = ValueExpression(subexpr[1])
 
-# def p_expression(subexpression):
-#     'expression : absExpression'
-#     subexpression[0] = subexpression[1]
-# 
-# def p_abstraction_expression(subexpression):
-#     'absExpression : BACKSLASH varExpression COLON typeExpression DOT expression'
-#     subexpression[0] = AbstractionExpression(subexpression[2], subexpression[4], subexpression[6])
-# 
-# def p_abstraction_if_expression(subexpression):
-#     'absExpression : ifExpression'
-#     subexpression[0] = subexpression[1]
-# 
-# def p_if_expression(subexpression):
-#     'ifExpression : IF expression THEN expression ELSE expression'
-#     subexpression[0] = IfExpression(subexpression[2], subexpression[4], subexpression[6])
-# 
-# def p_if_application_expression(subexpression):
-#     'ifExpression : appExpression'
-#     subexpression[0] = subexpression[1]
-# 
-# def p_application_expression(subexpression):
-#     'appExpression : appExpression termExpression'
-#     subexpression[0] = ApplicationExpression(subexpression[1], subexpression[2])
-# 
-# def p_application_term_expression(subexpression):
-#     'appExpression : termExpression'
-#     subexpression[0] = subexpression[1]
-# 
-# def p_term_var_expression(subexpression):
-#     'termExpression : varExpression'
-#     subexpression[0] = subexpression[1]
-# 
-# def p_term_function_expression(subexpression):
-#     'termExpression : functionExpression'
-#     subexpression[0] = subexpression[1]
-# 
-# def p_var_expression(subexpression):
-#     'varExpression : VAR'
-#     subexpression[0] = VarExpression(subexpression[1])
-# 
-# def p_function_succ_expression(subexpression):
-#     'functionExpression : SUCC L_PAREN expression R_PAREN'
-#     subexpression[0] = SuccExpression(subexpression[3])
-# 
-# def p_function_pred_expression(subexpression):
-#     'functionExpression : PRED L_PAREN expression R_PAREN'
-#     subexpression[0] = PredExpression(subexpression[3])
-# 
-# def p_function_is_zero_expression(subexpression):
-#     'functionExpression : IS_ZERO L_PAREN expression R_PAREN'
-#     subexpression[0] = IsZeroExpression(subexpression[3])
-# 
-# def p_function_val_expression(subexpression):
-#     'functionExpression : valExpression'
-#     subexpression[0] = subexpression[1]
-# 
-# def p_val_true_expression(subexpression):
-#     'valExpression : TRUE'
-#     subexpression[0] = TRUE
-# 
-# def p_val_false_expression(subexpression):
-#     'valExpression : FALSE'
-#     subexpression[0] = FALSE
-# 
-# def p_val_zero_expression(subexpression):
-#     'valExpression : ZERO'
-#     subexpression[0] = ZERO
-# 
-# def p_val_expression_expression(subexpression):
-#     'valExpression : L_PAREN expression R_PAREN'
-#     subexpression[0] = subexpression[2]
-# 
-# def p_type_function_expression(subexpression):
-#     'typeExpression : TYPE ARROW typeExpression'
-#     subexpression[0] = FunctionType(Type(subexpression[1]), subexpression[3])
-# 
-# def p_type_basic_expression(subexpression):
-#     'typeExpression : TYPE'
-#     subexpression[0] = Type(subexpression[1])
-# 
+def p_expression_value_true(subexpr):
+  'value : TRUE'
+  subexpr[0] = ValueExpression(subexpr[1])
+
+def p_expression_value_null(subexpr):
+  'value : NULL'
+  subexpr[0] = ValueExpression(subexpr[1])
+  
+def p_expression_value_number(subexpr):
+  'value : number'
+  subexpr[0] = ValueExpression(subexpr[1])
+
+def p_expression_value_object(subexpr):
+  'value : object'
+  subexpr[0] = ValueExpression(subexpr[1])
+
+def p_expression_value_array(subexpr):
+  'value : array'
+  subexpr[0] = ValueExpression(subexpr[1])
+  
+def p_expression_elements_value(subexpr):
+  'elements : value'
+
+def p_expression_elements_list(subexpr):
+  'elements : value VALUE_SEPARATOR elements'
+
+def p_expression_object(subexpr):
+  'object : BEGIN_OBJECT members END_OBJECT'
+  
+  subexpr[2] = ObjectExpression(subexpr[0])
+
+  
+def p_expression_object_empty(subexpr):
+  'object : BEGIN_OBJECT END_OBJECT'
+
+def p_expression_members(subexpr):
+  'members : pair'
+  
+def p_expression_members_list(subexpr):
+  'members : pair VALUE_SEPARATOR members'
+  
+def p_expression_pair(subexpr):
+  'pair : string NAME_SEPARATOR value'
+  
+def p_expression_array_empty(subexpr):
+  'array : BEGIN_ARRAY END_ARRAY'
+  
+def p_expression_array_list(subexpr):
+  'array : BEGIN_ARRAY elements END_ARRAY'
+
+def p_expression_number(subexpr):
+  'number : DIGITS'
+  
+def p_expression_string(subexpr):
+  'string : QUOTATION_MARK STRING QUOTATION_MARK'
+  
+  
+
 # 
 # def p_error(p):
 #     message = "Hubo un error durante el parseo.\n"
@@ -102,3 +87,5 @@ parser = yacc.yacc(debug=True)
 
 def apply_parser(str):
     return parser.parse(str)
+    
+print apply_parser('[{ "hola" : "chau" }]]')
