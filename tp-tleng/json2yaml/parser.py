@@ -2,7 +2,6 @@
 """Parser JSON to YAML."""
 import ply.yacc as yacc
 from lexer import tokens
-from types import *
 from expressions import *
 
 def p_expression_value_string(subexpr):
@@ -96,9 +95,9 @@ def apply_parser(str):
   
 #exp = '[1, [2, 3], [1, [2, 3]]]'
 #exp = '[1, [3, 4], {"h":"o","l":"a"}]'
-exp = '[ {"clave1": "valor1", "clave 2": [ 125, "Cadena 1" ], "- clave3": true}, "Cadena con salto de linea", [null, 35, {}] ]'
+#exp = '[ {"clave1": "valor1", "clave 2": [ 125, "Cadena 1" ], "- clave3": true}, "Cadena con salto de linea", [null, 35, {}] ]'
 #exp = '{"h":"o", "h":"a"}'
 
-expression = apply_parser(exp)
-result = expression.value([])
-print result
+#expression = apply_parser(exp)
+#result = expression.value([])
+#print result

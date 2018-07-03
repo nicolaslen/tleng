@@ -1,13 +1,12 @@
-"""Archivo principal de lambdacalc."""
-from lambdacalc import parse
+"""Archivo principal de json2yaml."""
+from json2yaml import parse
 import sys
 from string import join
     
 def execute(expression):
 	try:
 		parsed = parse(expression)
-		expressionType = str(parsed.type({}))
-		print(str(parsed.value({})) + ":" + expressionType)
+		print parsed.value([])
 	except Exception as e:
 		sys.stderr.write(str(e) + "\n")
 		exit(1)
@@ -16,7 +15,7 @@ def execute(expression):
 def main():
 	if len(sys.argv) < 2:
 		while True:
-			expression = raw_input('expression> ')
+			expression = raw_input('JSON> ')
 			if expression == "exit":
 				break
 			else:
