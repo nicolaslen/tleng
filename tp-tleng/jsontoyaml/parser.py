@@ -11,15 +11,15 @@ def p_expression_value_string(subexpr):
   
 def p_expression_value_false(subexpr):
   'value : FALSE'
-  subexpr[0] = ValueExpression(subexpr[1])
+  subexpr[0] = FalseExpression(subexpr[1])
 
 def p_expression_value_true(subexpr):
   'value : TRUE'
-  subexpr[0] = ValueExpression(subexpr[1])
+  subexpr[0] = TrueExpression(subexpr[1])
 
 def p_expression_value_null(subexpr):
   'value : NULL'
-  subexpr[0] = ValueExpression(subexpr[1])
+  subexpr[0] = NullExpression(subexpr[1])
   
 def p_expression_value_number(subexpr):
   'value : number'
@@ -27,59 +27,65 @@ def p_expression_value_number(subexpr):
 
 def p_expression_value_object(subexpr):
   'value : object'
-  subexpr[0] = ValueExpression(subexpr[1])
+  subexpr[0] = ValuePopExpression(subexpr[1])
 
 def p_expression_value_array(subexpr):
   'value : array'
-  subexpr[0] = ValueExpression(subexpr[1])
+  subexpr[0] = ValuePopExpression(subexpr[1])
   
 def p_expression_elements_value(subexpr):
   'elements : value'
+  subexpr[0] = ElementValueExpression(subexpr[1])
 
 def p_expression_elements_list(subexpr):
   'elements : value VALUE_SEPARATOR elements'
+  subexpr[0] = ElementListExpression(subexpr[1], subexpr[3])
 
 def p_expression_object(subexpr):
   'object : BEGIN_OBJECT members END_OBJECT'
-  
-  subexpr[2] = ObjectExpression(subexpr[0])
+  subexpr[0] = ObjectExpression(subexpr[2])
 
-  
 def p_expression_object_empty(subexpr):
   'object : BEGIN_OBJECT END_OBJECT'
+  subexpr[0] = ObjectEmptyExpression()
 
 def p_expression_members(subexpr):
   'members : pair'
+  subexpr[0] = ElementValueExpression(subexpr[1])
   
 def p_expression_members_list(subexpr):
   'members : pair VALUE_SEPARATOR members'
+  subexpr[0] = ElementListExpression(subexpr[1], subexpr[3])
   
 def p_expression_pair(subexpr):
   'pair : string NAME_SEPARATOR value'
+  subexpr[0] = PairExpression(subexpr[1], subexpr[3])
   
 def p_expression_array_empty(subexpr):
   'array : BEGIN_ARRAY END_ARRAY'
+  subexpr[0] = ArrayEmptyExpression()
   
 def p_expression_array_list(subexpr):
   'array : BEGIN_ARRAY elements END_ARRAY'
+  subexpr[0] = ArrayExpression(subexpr[2])
 
 def p_expression_number(subexpr):
   'number : DIGITS'
+  subexpr[0] = NumberExpression(subexpr[1])  
   
 def p_expression_string(subexpr):
   'string : QUOTATION_MARK STRING QUOTATION_MARK'
-  
-  
+  subexpr[0] = StringExpression(subexpr[2])  
 
-# 
-# def p_error(p):
-#     message = "Hubo un error durante el parseo.\n"
-#     if p is not None:
-#         message += "Expresión '{0}' incorrecta en la posición {1}.".format(p.value, str(p.lexpos))
-#     else:
-#         message += "La expresión no puede ser parseada por la producción {0} de {1}:{2}.".format(parser.symstack, __file__.split("/")[-1], parser.state)
-# 
-#     raise Exception(message)
+ 
+def p_error(p):
+  message = "Hubo un error durante el parseo.\n"
+  if p is not None:
+    message += "Expresión '{0}' incorrecta en la posición {1}.".format(p.value, str(p.lexpos))
+  else:
+    message += "La expresión no puede ser parseada por la producción {0} de {1}:{2}.".format(parser.symstack, __file__.split("/")[-1], parser.state)
+
+  raise Exception(message)
 
 
 # Build the parser
@@ -87,5 +93,11 @@ parser = yacc.yacc(debug=True)
 
 def apply_parser(str):
     return parser.parse(str)
-    
-print apply_parser('[{ "hola" : "chau" }]]')
+  
+#exp = '[1, [2, 3], [1, [2, 3]]]'
+#exp = '[1, [3, 4], {"h":"o","l":"a"}]'
+exp = '[ {"clave1": "valor1", "clave 2": [ 125, "Cadena 1" ], "- clave3": true}, "Cadena con salto de linea", [null, 35, {}] ]'
+
+expression = apply_parser(exp)
+result = expression.value([])
+print result
