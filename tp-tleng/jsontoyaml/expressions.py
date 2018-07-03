@@ -16,6 +16,8 @@ class Expression(object):
 
     return "{0}{1}{2}".format(spaces, prefix, exp)
 
+# V -> S
+# V -> N
 class ValueExpression(Expression):
   def __init__(self, expression):
     self.expression = expression
@@ -23,6 +25,8 @@ class ValueExpression(Expression):
   def value(self, prefixs):
     return self.expression.value(prefixs)
 
+# V -> O
+# V -> A
 class ValuePopExpression(Expression):
   def __init__(self, expression):
     self.expression = expression
@@ -39,7 +43,7 @@ class ObjectExpression(Expression):
 
   def value(self, prefixs):
     prefixs.append("")
-    return "\n{0}".format(self.members.value(prefixs)) 
+    return "\n{0}".format(self.members.value(prefixs, set())) 
 
 # O -> { }
 class ObjectEmptyExpression(Expression):
@@ -63,8 +67,7 @@ class ArrayExpression(Expression):
     return "\n{0}".format(self.expression.value(prefixs))
 
 # E -> V , E
-# M -> P , M
-class ElementListExpression(Expression):
+class ElementArrayExpression(Expression):
   def __init__(self, valueExpression, elementsExpression):
     self.valueExpression = valueExpression
     self.elementsExpression = elementsExpression
@@ -73,23 +76,47 @@ class ElementListExpression(Expression):
     exp = "{0}\n{1}".format(self.valueExpression.value(prefixs), self.elementsExpression.value(prefixs))
     return Expression.indent(self, prefixs, exp)
 
-# M -> P
+# M -> P , M
+class ElementObjectExpression(Expression):
+  def __init__(self, pairExpression, elementsExpression):
+    self.pairExpression = pairExpression
+    self.elementsExpression = elementsExpression
+
+  def value(self, prefixs, keys):
+    exp = "{0}\n{1}".format(self.pairExpression.value(prefixs, keys), self.elementsExpression.value(prefixs, keys))
+    return Expression.indent(self, prefixs, exp)
+
 # E -> V
-class ElementValueExpression(Expression):
+class LastElementArrayExpression(Expression):
   def __init__(self, expression):
     self.expression = expression
 
   def value(self, prefixs):
     return Expression.indent(self, prefixs, self.expression.value(prefixs))
 
-# M -> S : V
+# M -> P
+class LastElementObjectExpression(Expression):
+  def __init__(self, expression):
+    self.expression = expression
+
+  def value(self, prefixs, keys):
+    return Expression.indent(self, prefixs, self.expression.value(prefixs, keys))
+
+# P -> S : V
 class PairExpression(Expression):
   def __init__(self, stringExpression, valueExpression):
     self.stringExpression = stringExpression
     self.valueExpression = valueExpression
 
-  def value(self, prefixs):
-    return "{0}: {1}".format(self.stringExpression.value(prefixs), self.valueExpression.value(prefixs))
+  def value(self, prefixs, keys):
+    key = self.stringExpression.value(prefixs)
+
+    if (key in keys):
+      raise Exception("Clave repetida")
+    else:
+      keys.add(key)
+
+    return "{0}: {1}".format(key, self.valueExpression.value(prefixs))
 
 # S -> " string "
 class StringExpression(Expression):
@@ -99,7 +126,7 @@ class StringExpression(Expression):
   def value(self, prefixs):
     return self.expression
 
-# V -> num
+# N -> num
 class NumberExpression(Expression):
   def __init__(self, expression):
     self.expression = expression
@@ -107,7 +134,7 @@ class NumberExpression(Expression):
   def value(self, prefixs):
     return str(self.expression)
 
-# V -> true
+# V -> trueindent
 class TrueExpression(Expression):
   def __init__(self, expression):
     self.expression = expression

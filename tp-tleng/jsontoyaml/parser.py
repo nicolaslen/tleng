@@ -35,11 +35,11 @@ def p_expression_value_array(subexpr):
   
 def p_expression_elements_value(subexpr):
   'elements : value'
-  subexpr[0] = ElementValueExpression(subexpr[1])
+  subexpr[0] = LastElementArrayExpression(subexpr[1])
 
 def p_expression_elements_list(subexpr):
   'elements : value VALUE_SEPARATOR elements'
-  subexpr[0] = ElementListExpression(subexpr[1], subexpr[3])
+  subexpr[0] = ElementArrayExpression(subexpr[1], subexpr[3])
 
 def p_expression_object(subexpr):
   'object : BEGIN_OBJECT members END_OBJECT'
@@ -51,11 +51,11 @@ def p_expression_object_empty(subexpr):
 
 def p_expression_members(subexpr):
   'members : pair'
-  subexpr[0] = ElementValueExpression(subexpr[1])
+  subexpr[0] = LastElementObjectExpression(subexpr[1])
   
 def p_expression_members_list(subexpr):
   'members : pair VALUE_SEPARATOR members'
-  subexpr[0] = ElementListExpression(subexpr[1], subexpr[3])
+  subexpr[0] = ElementObjectExpression(subexpr[1], subexpr[3])
   
 def p_expression_pair(subexpr):
   'pair : string NAME_SEPARATOR value'
@@ -96,7 +96,8 @@ def apply_parser(str):
   
 #exp = '[1, [2, 3], [1, [2, 3]]]'
 #exp = '[1, [3, 4], {"h":"o","l":"a"}]'
-exp = '[ {"clave1": "valor1", "clave 2": [ 125, "Cadena 1" ], "- clave3": true}, "Cadena con salto de linea", [null, 35, {}] ]'
+#exp = '[ {"clave1": "valor1", "clave 2": [ 125, "Cadena 1" ], "- clave3": true}, "Cadena con salto de linea", [null, 35, {}] ]'
+exp = '{"h":"o", "h":"a"}'
 
 expression = apply_parser(exp)
 result = expression.value([])
