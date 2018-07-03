@@ -124,7 +124,12 @@ class StringExpression(Expression):
     self.expression = expression
 
   def value(self, prefixs):
-    return self.expression
+    #Acá habría que reemplazar False por una condición que dé True cuando
+    #dentro del string haya un caracter \n o alguno de esos especiales
+    if (len(self.expression) > 0) and ((self.expression[:1] == '-') or False):
+      return "\"{0}\"".format(self.expression)
+    else:
+      return self.expression
 
 # N -> num
 class NumberExpression(Expression):
@@ -134,7 +139,7 @@ class NumberExpression(Expression):
   def value(self, prefixs):
     return str(self.expression)
 
-# V -> trueindent
+# V -> true
 class TrueExpression(Expression):
   def __init__(self, expression):
     self.expression = expression
