@@ -20,8 +20,9 @@ tokens = [
   'E',
   'MINUS',
   'PLUS',
-  'ZERO',
-  'STRING'
+  'STRING',
+  'BACKSLASH',
+  'UNICODE_HEX'
 ]
 
   # 2 estados del lexer:
@@ -50,30 +51,38 @@ t_DIGITS               = r'[0-9]+'
 t_E                    = r'[eE]'
 t_MINUS                = r'\-'
 t_PLUS                 = r'\+'
-t_ZERO                 = r'\0'
 
 
-t_ignore = ' \t\n\r'
+t_ignore = ' \s\t\n\r'
 
 # No ignorar ningun caracter dentro del estado string
 t_string_ignore = ''
 
 
-# Enters the string state on an opening quotation mark 
+# Ingresa el estado string en una comilla de apertura
 def t_QUOTATION_MARK(t):
   r'\"'
   t.lexer.push_state('string') 
   return t
-	
-# Exits the string state on an unescaped closing quotation mark
+
+def t_string_STRING(t):
+  r'[\x20-\x21,\x23-\x5B,\x5D-\xFFFF]+'
+  t.value = unicode(t.value, encoding='utf8')
+  return t
+
+# Sale del estado string en una comilla de cierre
 def t_string_QUOTATION_MARK(t):
-  r'\"'
+  r'\x22'  # '"'
   t.lexer.pop_state()
   return t
-  
-#Ha que ver este rango para el tema de las tíldes
-def t_string_STRING(t):
-  r'[\x20-\x21,\x23-\xFFFF]+'
+
+def t_string_BACKSLASH(t):
+  r'[\",\\,\/,\b,\f,\n,\r,\t]'
+  t.value = unicode(t.value, encoding='utf8')
+  return t
+
+def t_string_UNICODE_HEX(t):
+  r'\u[\x30-\x39,\x41-\x46,\x61-\x66]{4}' # 'uXXXX'
   t.value = unicode(t.value, encoding='utf8')
   return t
 
@@ -88,9 +97,10 @@ lexer = lex.lex()
 
 def apply_lexer(string):
     """Aplica el lexer al string dado."""
+    print string
     lexer.input(string)
     
     return list(lexer)
 
-#print apply_lexer('[ {')
-print apply_lexer('[ {"clave1": "valor1", "clave 2": [ 125, "Cadena 1" ], "- clave3": true}, "Cadena consalto de línea", [null, 35, {}] ]')
+#print apply_lexer(exp)
+
