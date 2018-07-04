@@ -20,8 +20,7 @@ tokens = [
   'E',
   'MINUS',
   'PLUS',
-  'STRING',
-  'UNICODE_HEX'
+  'STRING'
 ]
 
   # 2 estados del lexer:
@@ -75,11 +74,6 @@ def t_string_QUOTATION_MARK(t):
   t.lexer.pop_state()
   return t
 
-def t_string_UNICODE_HEX(t):
-  r'\u[\x30-\x39,\x41-\x46,\x61-\x66]{4}' # 'uXXXX'
-  t.value = unicode(t.value, encoding='utf8')
-  return t
-
 def t_error(t):
     raise Exception("Expresión inválida '%s'" % t.value)
 
@@ -96,4 +90,4 @@ def apply_lexer(string):
     
     return list(lexer)
 
-# print apply_lexer('"Hola\nnico"')
+#print apply_lexer('"holá\u0033"')

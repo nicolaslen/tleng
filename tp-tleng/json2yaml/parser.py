@@ -143,9 +143,10 @@ def apply_parser(str):
   
 #exp = '[1, [2, 3], [1, [2, 3]]]'
 #exp = '[1, [3, 4], {"h":"o","l":"a"}]'
-#exp = '[ {"clave1": "valor1", "clave 2": [ -125.74E-5, "Cadena 1" ], "- clave3": true}, "Cadena con salto de  Linea", [null, 35, {}] ]'
+#exp = '"á'
+#exp = '[ {"clave1": "valor1", "clave 2": [ 125, "Cadena 1" ], "- clave3": true}, "Cadena con salto\nde línea", [null, 35.6e9, {}] ]'
 #exp = '{"h":"o", "h":"a"}'
-#exp = '"hola\n\b\t\tnico"'
+#exp = '"hola\n\b\t\tnico\u0033"'
 #expression = apply_parser(exp)
 #result = expression.value([])
 #print "result = {0}".format(result)

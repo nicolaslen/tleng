@@ -121,7 +121,7 @@ class PairExpression(Expression):
 # S -> " string "
 class StringExpression(Expression):
   def __init__(self, expression):
-    self.expression = expression
+    self.expression = expression.encode('utf-8')
 
   def value(self, prefixs):
     if ((self.expression[:1] == '-') or ("\\" in self.expression) or ("\/" in self.expression) or ("\b" in self.expression) or ("\f" in self.expression) or ("\n" in self.expression) or ("\r" in self.expression) or ("\t" in self.expression)):

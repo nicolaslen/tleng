@@ -1,9 +1,5 @@
 Created by PLY version 3.10 (http://www.dabeaz.com/ply)
 
-Unused terminals:
-
-    UNICODE_HEX
-
 Grammar
 
 Rule 0     S' -> elements
@@ -53,7 +49,6 @@ PLUS                 : 22 25
 QUOTATION_MARK       : 27 27 28 28
 STRING               : 27
 TRUE                 : 12
-UNICODE_HEX          : 
 VALUE_SEPARATOR      : 2 6
 error                : 
 
