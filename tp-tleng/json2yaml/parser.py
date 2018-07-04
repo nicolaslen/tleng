@@ -68,19 +68,25 @@ def p_expression_array_list(subexpr):
   'array : BEGIN_ARRAY elements END_ARRAY'
   subexpr[0] = ArrayExpression(subexpr[2])
 
-def p_expression_number_plus(subexpr):
-  'number : integer
-            | float'
+def p_expression_number_plus_integer(subexpr):
+  'number : integer'
+  subexpr[0] = subexpr[1]
+ 
+def p_expression_number_plus_float(subexpr):
+  'number : float'
   subexpr[0] = subexpr[1]
 
-def p_expression_number_minus(subexpr):
-  'number : MINUS integer
-            | MINUS float'
+def p_expression_number_minus_integer(subexpr):
+  'number : MINUS integer'
+  subexpr[0] = NumberExpression(subexpr[2])
+  
+def p_expression_number_minus_float(subexpr):
+  'number : MINUS float'
   subexpr[0] = - subexpr[2]
 
 def p_expression_integer(subexpr):
   'integer : DIGITS'
-  subexpr[0] = - NumberExpression(subexpr[1])
+  subexpr[0] = NumberExpression(subexpr[1])
 
 def p_expression_integer_exp(subexpr):
   'integer : DIGITS exp'
@@ -98,11 +104,11 @@ def p_expression_exp(subexpr):
   'exp : E DIGITS'
   subexpr[0] = int(subexpr[2])
 
-def p_expression_exp+(subexpr):
+def p_expression_exp_plus(subexpr):
   'exp : E PLUS DIGITS'
   subexpr[0] = int(subexpr[3])
   
-def p_expression_exp-(subexpr):
+def p_expression_exp_minus(subexpr):
   'exp : E MINUS DIGITS'
   subexpr[0] = -int(subexpr[e])
   
@@ -132,11 +138,11 @@ parser = yacc.yacc(debug=True)
 def apply_parser(str):
     return parser.parse(str)
   
-#exp = '[1, [2, 3], [1, [2, 3]]]'
+exp = '[-1, [2, 3], [1, [2, 3]]]'
 #exp = '[1, [3, 4], {"h":"o","l":"a"}]'
 #exp = '[ {"clave1": "valor1", "clave 2": [ 125, "Cadena 1" ], "- clave3": true}, "Cadena con salto de linea", [null, 35, {}] ]'
 #exp = '{"h":"o", "h":"a"}'
 
-#expression = apply_parser(exp)
-#result = expression.value([])
-#print result
+expression = apply_parser(exp)
+result = expression.value([])
+print result
