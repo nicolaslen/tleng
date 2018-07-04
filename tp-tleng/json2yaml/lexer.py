@@ -71,6 +71,7 @@ def t_string_QUOTATION_MARK(t):
   t.lexer.pop_state()
   return t
   
+#Ha que ver este rango para el tema de las tíldes
 def t_string_STRING(t):
   r'[\x20-\x21,\x23-\xFFFF]+'
   t.value = unicode(t.value, encoding='utf8')
