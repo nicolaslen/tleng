@@ -93,4 +93,4 @@ def apply_lexer(string):
     return list(lexer)
 
 #print apply_lexer('[ {')
-# print apply_lexer('[ {"clave1": "valor1", "clave 2": [ 125, "Cadena 1" ], "- clave3": true}, "Cadena con salto de línea", [null, 35.6e9, {}] ]')
+print apply_lexer('[ {"clave1": "valor1", "clave 2": [ 125, "Cadena 1" ], "- clave3": true}, "Cadena consalto de línea", [null, 35, {}] ]')

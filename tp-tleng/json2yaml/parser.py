@@ -68,54 +68,45 @@ def p_expression_array_list(subexpr):
   'array : BEGIN_ARRAY elements END_ARRAY'
   subexpr[0] = ArrayExpression(subexpr[2])
 
-def p_expression_number_plus_integer(subexpr):
+def p_expression_number(subexpr):
   'number : integer'
-  subexpr[0] = subexpr[1]
- 
-def p_expression_number_plus_float(subexpr):
-  'number : float'
-  subexpr[0] = subexpr[1]
-
-def p_expression_number_minus_integer(subexpr):
-  'number : MINUS integer'
-  subexpr[0] = NumberExpression(subexpr[2])
-  
-def p_expression_number_minus_float(subexpr):
-  'number : MINUS float'
-  subexpr[0] = - subexpr[2]
+  subexpr[0] = ValueExpression(subexpr[1]) 
 
 def p_expression_integer(subexpr):
   'integer : DIGITS'
-  subexpr[0] = NumberExpression(subexpr[1])
+  subexpr[0] = NumberExpression(subexpr[1]) 
 
-def p_expression_integer_exp(subexpr):
-  'integer : DIGITS exp'
-  subexpr[0] = NumberExpression(subexpr[1]) * (10 ** subexpr[2])
-  
-def p_expression_float(subexpr):
-  'float : DIGITS frac'
-  subexpr[0] = NumberExpression(subexpr[1]) + subexpr[2]
+def p_expression_integer_negative(subexpr):
+  'integer : MINUS DIGITS'
+  subexpr[0] = NegativeNumberExpression(subexpr[2]) 
 
-def p_expression_float_exp(subexpr):
-  'float : DIGITS frac exp'
-  subexpr[0] = (NumberExpression(subexpr[1]) + subexpr[2]) * (10 ** subexpr[3])
+def p_expression_frac(subexpr):
+  'number : integer DECIMAL_POINT DIGITS'
+  subexpr[0] = FracExpression(subexpr[1], subexpr[3]) 
 
 def p_expression_exp(subexpr):
-  'exp : E DIGITS'
-  subexpr[0] = int(subexpr[2])
+  'number : integer E DIGITS'
+  subexpr[0] = ExpExpression(subexpr[1], subexpr[3])
 
-def p_expression_exp_plus(subexpr):
-  'exp : E PLUS DIGITS'
-  subexpr[0] = int(subexpr[3])
-  
-def p_expression_exp_minus(subexpr):
-  'exp : E MINUS DIGITS'
-  subexpr[0] = -int(subexpr[e])
-  
-def p_expression_frac(subexpr):
-  'frac : DECIMAL_POINT DIGITS'
-  subexpr[0] = float('.' + subexpr[2])
+def p_expression_exp_positive(subexpr):
+  'number : integer E PLUS DIGITS'
+  subexpr[0] = ExpExpression(subexpr[1], subexpr[4])
 
+def p_expression_exp_negative(subexpr):
+  'number : integer E MINUS DIGITS'
+  subexpr[0] = ExpNegativeExpression(subexpr[1], subexpr[4])
+
+def p_expression_frac_exp(subexpr):
+  'number : integer DECIMAL_POINT DIGITS E DIGITS'
+  subexpr[0] = FracExpExpression(subexpr[1], subexpr[3], subexpr[5])
+
+def p_expression_exp_positive(subexpr):
+  'number : integer DECIMAL_POINT DIGITS E PLUS DIGITS'
+  subexpr[0] = FracExpExpression(subexpr[1], subexpr[3], subexpr[6])
+
+def p_expression_exp_negative(subexpr):
+  'number : integer DECIMAL_POINT DIGITS E MINUS DIGITS'
+  subexpr[0] = FracExpNegativeExpression(subexpr[1], subexpr[3], subexpr[6])
   
 def p_expression_string(subexpr):
   'string : QUOTATION_MARK STRING QUOTATION_MARK'
@@ -138,11 +129,11 @@ parser = yacc.yacc(debug=True)
 def apply_parser(str):
     return parser.parse(str)
   
-exp = '[-1, [2, 3], [1, [2, 3]]]'
+#exp = '[1, [2, 3], [1, [2, 3]]]'
 #exp = '[1, [3, 4], {"h":"o","l":"a"}]'
-#exp = '[ {"clave1": "valor1", "clave 2": [ 125, "Cadena 1" ], "- clave3": true}, "Cadena con salto de linea", [null, 35, {}] ]'
+exp = '[ {"clave1": "valor1", "clave 2": [ -125.74E-5, "Cadena 1" ], "- clave3": true}, "Cadena con salto de  Linea", [null, 35, {}] ]'
 #exp = '{"h":"o", "h":"a"}'
-
+#exp = '1'
 expression = apply_parser(exp)
 result = expression.value([])
 print result

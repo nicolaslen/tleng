@@ -125,7 +125,7 @@ class StringExpression(Expression):
   def value(self, prefixs):
     #Acá habría que reemplazar False por una condición que dé True cuando
     #dentro del string haya un caracter \n o alguno de esos especiales
-    if (len(self.expression) > 0) and ((self.expression[:1] == '-') or False):
+    if (len(self.expression) > 0) and ((self.expression[:1] == '-') or ("\\" in self.expression)):
       return "\"{0}\"".format(self.expression)
     else:
       return self.expression
@@ -137,6 +137,55 @@ class NumberExpression(Expression):
 
   def value(self, prefixs):
     return str(self.expression)
+
+class NegativeNumberExpression(Expression):
+  def __init__(self, expression):
+    self.expression = expression
+
+  def value(self, prefixs):
+    return "{0}{1}".format("-", str(self.expression))
+
+class FracExpression(Expression):
+  def __init__(self, integerExpression, fracExpresssion):
+    self.integerExpression = integerExpression
+    self.fracExpresssion = fracExpresssion
+
+  def value(self, prefixs):
+    return "{0}{1}{2}".format(str(self.integerExpression.value(prefixs)), ".", str(self.fracExpresssion))
+
+class ExpExpression(Expression):
+  def __init__(self, integerExpression, expExpresssion):
+    self.integerExpression = integerExpression
+    self.expExpresssion = expExpresssion
+
+  def value(self, prefixs):
+    return "{0}{1}{2}".format(str(self.integerExpression.value(prefixs)), "e", str(self.expExpresssion))
+
+class FracExpExpression(Expression):
+  def __init__(self, integerExpression, fracExpresssion, expExpresssion):
+    self.integerExpression = integerExpression
+    self.expExpresssion = expExpresssion
+    self.fracExpresssion = fracExpresssion
+
+  def value(self, prefixs):
+    return "{0}{1}{2}{3}{4}".format(str(self.integerExpression.value(prefixs)), ".", str(self.fracExpresssion), "e", str(self.expExpresssion))
+
+class FracExpNegativeExpression(Expression):
+  def __init__(self, integerExpression, fracExpresssion, expExpresssion):
+    self.integerExpression = integerExpression
+    self.expExpresssion = expExpresssion
+    self.fracExpresssion = fracExpresssion
+
+  def value(self, prefixs):
+    return "{0}{1}{2}{3}{4}".format(str(self.integerExpression.value(prefixs)), ".", str(self.fracExpresssion), "e-", str(self.expExpresssion))
+
+class ExpNegativeExpression(Expression):
+  def __init__(self, integerExpression, expExpresssion):
+    self.integerExpression = integerExpression
+    self.expExpresssion = expExpresssion
+
+  def value(self, prefixs):
+    return "{0}{1}{2}".format(str(self.integerExpression.value(prefixs)), "e-", str(self.expExpresssion))
 
 # V -> true
 class TrueExpression(Expression):
