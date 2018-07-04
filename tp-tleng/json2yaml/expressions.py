@@ -124,10 +124,9 @@ class StringExpression(Expression):
     self.expression = expression
 
   def value(self, prefixs):
-    #Acá habría que reemplazar False por una condición que dé True cuando
-    #dentro del string haya un caracter \n o alguno de esos especiales
-    if (len(self.expression) > 0) and ((self.expression[:1] == '-') or ("\\" in self.expression)):
-      return "\"{0}\"".format(self.expression)
+    if ((self.expression[:1] == '-') or ("\\" in self.expression) or ("\/" in self.expression) or ("\b" in self.expression) or ("\f" in self.expression) or ("\n" in self.expression) or ("\r" in self.expression) or ("\t" in self.expression)):
+      exp = self.expression.replace("\\","\\\\").replace("\/","\\/").replace("\b","\\b").replace("\f","\\f").replace("\n","\\n").replace("\r","\\r").replace("\t","\\t")
+      return "\"{0}\"".format(exp)
     else:
       return self.expression
 

@@ -21,7 +21,6 @@ tokens = [
   'MINUS',
   'PLUS',
   'STRING',
-  'BACKSLASH',
   'UNICODE_HEX'
 ]
 
@@ -53,7 +52,7 @@ t_MINUS                = r'\-'
 t_PLUS                 = r'\+'
 
 
-t_ignore = ' \s\t\n\r'
+t_ignore = ' \t\n\r'
 
 # No ignorar ningun caracter dentro del estado string
 t_string_ignore = ''
@@ -66,7 +65,7 @@ def t_QUOTATION_MARK(t):
   return t
 
 def t_string_STRING(t):
-  r'[\x20-\x21,\x23-\x5B,\x5D-\xFFFF]+'
+  r'[\\,\/,\b,\f,\n,\r,\t,\x20-\x21,\x23-\x5B,\x5D-\xFFFF]+'
   t.value = unicode(t.value, encoding='utf8')
   return t
 
@@ -74,11 +73,6 @@ def t_string_STRING(t):
 def t_string_QUOTATION_MARK(t):
   r'\x22'  # '"'
   t.lexer.pop_state()
-  return t
-
-def t_string_BACKSLASH(t):
-  r'[\",\\,\/,\b,\f,\n,\r,\t]'
-  t.value = unicode(t.value, encoding='utf8')
   return t
 
 def t_string_UNICODE_HEX(t):
@@ -102,5 +96,4 @@ def apply_lexer(string):
     
     return list(lexer)
 
-#print apply_lexer(exp)
-
+# print apply_lexer('"Hola\nnico"')
