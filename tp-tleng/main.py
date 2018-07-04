@@ -6,7 +6,7 @@ from string import join
 def execute(expression):
 	try:
 		parsed = parse(expression)
-		print parsed.value([])
+		print "YAML> {0}\n".format(parsed.value([]))
 	except Exception as e:
 		sys.stderr.write(str(e) + "\n")
 		exit(1)
