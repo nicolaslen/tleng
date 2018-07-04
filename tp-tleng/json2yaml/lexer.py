@@ -72,7 +72,7 @@ def t_string_QUOTATION_MARK(t):
   return t
   
 def t_string_STRING(t):
-  r'[\x20-\x21,\x23-\xFF]+'
+  r'[\x20-\x21,\x23-\xFFFF]+'
   t.value = unicode(t.value, encoding='utf8')
   return t
 

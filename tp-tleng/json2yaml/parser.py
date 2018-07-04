@@ -68,9 +68,48 @@ def p_expression_array_list(subexpr):
   'array : BEGIN_ARRAY elements END_ARRAY'
   subexpr[0] = ArrayExpression(subexpr[2])
 
-def p_expression_number(subexpr):
-  'number : DIGITS'
-  subexpr[0] = NumberExpression(subexpr[1])  
+def p_expression_number_plus(subexpr):
+  'number : integer
+            | float'
+  subexpr[0] = subexpr[1]
+
+def p_expression_number_minus(subexpr):
+  'number : MINUS integer
+            | MINUS float'
+  subexpr[0] = - subexpr[2]
+
+def p_expression_integer(subexpr):
+  'integer : DIGITS'
+  subexpr[0] = - NumberExpression(subexpr[1])
+
+def p_expression_integer_exp(subexpr):
+  'integer : DIGITS exp'
+  subexpr[0] = NumberExpression(subexpr[1]) * (10 ** subexpr[2])
+  
+def p_expression_float(subexpr):
+  'float : DIGITS frac'
+  subexpr[0] = NumberExpression(subexpr[1]) + subexpr[2]
+
+def p_expression_float_exp(subexpr):
+  'float : DIGITS frac exp'
+  subexpr[0] = (NumberExpression(subexpr[1]) + subexpr[2]) * (10 ** subexpr[3])
+
+def p_expression_exp(subexpr):
+  'exp : E DIGITS'
+  subexpr[0] = int(subexpr[2])
+
+def p_expression_exp+(subexpr):
+  'exp : E PLUS DIGITS'
+  subexpr[0] = int(subexpr[3])
+  
+def p_expression_exp-(subexpr):
+  'exp : E MINUS DIGITS'
+  subexpr[0] = -int(subexpr[e])
+  
+def p_expression_frac(subexpr):
+  'frac : DECIMAL_POINT DIGITS'
+  subexpr[0] = float('.' + subexpr[2])
+
   
 def p_expression_string(subexpr):
   'string : QUOTATION_MARK STRING QUOTATION_MARK'
