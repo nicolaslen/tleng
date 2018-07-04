@@ -17,6 +17,7 @@ class Expression(object):
 
 # V -> S
 # V -> N
+# N -> int
 class ValueExpression(Expression):
   def __init__(self, expression):
     self.expression = expression
@@ -130,7 +131,7 @@ class StringExpression(Expression):
     else:
       return self.expression
 
-# N -> num
+# int -> DIGITS
 class NumberExpression(Expression):
   def __init__(self, expression):
     self.expression = expression
@@ -138,29 +139,34 @@ class NumberExpression(Expression):
   def value(self, prefixs):
     return str(self.expression)
 
+# int -> MINUS DIGITS
 class NegativeNumberExpression(Expression):
   def __init__(self, expression):
     self.expression = expression
 
   def value(self, prefixs):
-    return "{0}{1}".format("-", str(self.expression))
+    return "-{0}".format(str(self.expression))
 
+# N -> int DECIMAL_POINT DIGITS
 class FracExpression(Expression):
   def __init__(self, integerExpression, fracExpresssion):
     self.integerExpression = integerExpression
     self.fracExpresssion = fracExpresssion
 
   def value(self, prefixs):
-    return "{0}{1}{2}".format(str(self.integerExpression.value(prefixs)), ".", str(self.fracExpresssion))
+    return "{0}.{1}".format(self.integerExpression.value(prefixs), str(self.fracExpresssion))
 
+# N -> int E DIGITS
+# N -> int E PLUS DIGITS
 class ExpExpression(Expression):
   def __init__(self, integerExpression, expExpresssion):
     self.integerExpression = integerExpression
     self.expExpresssion = expExpresssion
 
   def value(self, prefixs):
-    return "{0}{1}{2}".format(str(self.integerExpression.value(prefixs)), "e", str(self.expExpresssion))
+    return "{0}e{1}".format(self.integerExpression.value(prefixs), str(self.expExpresssion))
 
+# N -> int DECIMAL_POINT DIGITS E DIGITS
 class FracExpExpression(Expression):
   def __init__(self, integerExpression, fracExpresssion, expExpresssion):
     self.integerExpression = integerExpression
@@ -168,8 +174,9 @@ class FracExpExpression(Expression):
     self.fracExpresssion = fracExpresssion
 
   def value(self, prefixs):
-    return "{0}{1}{2}{3}{4}".format(str(self.integerExpression.value(prefixs)), ".", str(self.fracExpresssion), "e", str(self.expExpresssion))
+    return "{0}.{1}e{2}".format(self.integerExpression.value(prefixs), str(self.fracExpresssion), str(self.expExpresssion))
 
+# N -> int DECIMAL_POINT DIGITS E MINUS DIGITS
 class FracExpNegativeExpression(Expression):
   def __init__(self, integerExpression, fracExpresssion, expExpresssion):
     self.integerExpression = integerExpression
@@ -177,15 +184,16 @@ class FracExpNegativeExpression(Expression):
     self.fracExpresssion = fracExpresssion
 
   def value(self, prefixs):
-    return "{0}{1}{2}{3}{4}".format(str(self.integerExpression.value(prefixs)), ".", str(self.fracExpresssion), "e-", str(self.expExpresssion))
+    return "{0}.{1}e-{2}".format(self.integerExpression.value(prefixs), str(self.fracExpresssion), str(self.expExpresssion))
 
+# N -> int E MINUS DIGITS
 class ExpNegativeExpression(Expression):
   def __init__(self, integerExpression, expExpresssion):
     self.integerExpression = integerExpression
     self.expExpresssion = expExpresssion
 
   def value(self, prefixs):
-    return "{0}{1}{2}".format(str(self.integerExpression.value(prefixs)), "e-", str(self.expExpresssion))
+    return "{0}e-{1}".format(self.integerExpression.value(prefixs), "e-", str(self.expExpresssion))
 
 # V -> true
 class TrueExpression(Expression):
@@ -204,9 +212,7 @@ class FalseExpression(Expression):
     return "false"
 
 # V -> null
-class NullExpression(Expression):
-  def __init__(self, expression):
-    self.expression = expression
-
+# S -> " "
+class EmptyExpression(Expression):
   def value(self, prefixs):
     return ""

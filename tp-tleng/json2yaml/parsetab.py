@@ -5,9 +5,9 @@ _tabversion = '3.10'
 
 _lr_method = 'LALR'
 
-_lr_signature = 'BEGIN_ARRAY BEGIN_OBJECT END_ARRAY END_OBJECT NAME_SEPARATOR VALUE_SEPARATOR QUOTATION_MARK FALSE TRUE NULL DECIMAL_POINT DIGITS E MINUS PLUS ZERO STRINGvalue : stringvalue : FALSEvalue : TRUEvalue : NULLvalue : numbervalue : objectvalue : arrayelements : valueelements : value VALUE_SEPARATOR elementsobject : BEGIN_OBJECT members END_OBJECTobject : BEGIN_OBJECT END_OBJECTmembers : pairmembers : pair VALUE_SEPARATOR memberspair : string NAME_SEPARATOR valuearray : BEGIN_ARRAY END_ARRAYarray : BEGIN_ARRAY elements END_ARRAYnumber : DIGITSstring : QUOTATION_MARK STRING QUOTATION_MARK'
+_lr_signature = 'BEGIN_ARRAY BEGIN_OBJECT END_ARRAY END_OBJECT NAME_SEPARATOR VALUE_SEPARATOR QUOTATION_MARK FALSE TRUE NULL DECIMAL_POINT DIGITS E MINUS PLUS STRING UNSPECIAL SPECIAL REVERSE_SOLIDUS SOLIDUS BACKSPACE_CHAR FORM_FEED_CHAR LINE_FEED_CHAR CARRIAGE_RETURN_CHAR TAB_CHARvalue : stringvalue : FALSEvalue : TRUEvalue : NULLvalue : numbervalue : objectvalue : arrayelements : valueelements : value VALUE_SEPARATOR elementsobject : BEGIN_OBJECT members END_OBJECTobject : BEGIN_OBJECT END_OBJECTmembers : pairmembers : pair VALUE_SEPARATOR memberspair : string NAME_SEPARATOR valuearray : BEGIN_ARRAY END_ARRAYarray : BEGIN_ARRAY elements END_ARRAYnumber : integerinteger : DIGITSinteger : MINUS DIGITSnumber : integer DECIMAL_POINT DIGITSnumber : integer E DIGITSnumber : integer E PLUS DIGITSnumber : integer E MINUS DIGITSnumber : integer DECIMAL_POINT DIGITS E DIGITSnumber : integer DECIMAL_POINT DIGITS E PLUS DIGITSnumber : integer DECIMAL_POINT DIGITS E MINUS DIGITSstring : QUOTATION_MARK STRING QUOTATION_MARKstring : QUOTATION_MARK QUOTATION_MARK'
     
-_lr_action_items = {'DIGITS':([0,5,23,25,],[1,1,1,1,]),'VALUE_SEPARATOR':([1,3,4,6,7,10,11,12,13,15,18,19,21,24,26,28,],[-17,-2,-1,-6,-5,-7,-4,-3,-11,22,-15,25,-10,-16,-18,-14,]),'BEGIN_OBJECT':([0,5,23,25,],[2,2,2,2,]),'FALSE':([0,5,23,25,],[3,3,3,3,]),'END_OBJECT':([1,2,3,4,6,7,10,11,12,13,14,15,18,21,24,26,27,28,],[-17,13,-2,-1,-6,-5,-7,-4,-3,-11,21,-12,-15,-10,-16,-18,-13,-14,]),'BEGIN_ARRAY':([0,5,23,25,],[5,5,5,5,]),'NAME_SEPARATOR':([16,26,],[23,-18,]),'QUOTATION_MARK':([0,2,5,20,22,23,25,],[9,9,9,26,9,9,9,]),'END_ARRAY':([1,3,4,5,6,7,10,11,12,13,17,18,19,21,24,26,29,],[-17,-2,-1,18,-6,-5,-7,-4,-3,-11,24,-15,-8,-10,-16,-18,-9,]),'STRING':([9,],[20,]),'NULL':([0,5,23,25,],[11,11,11,11,]),'TRUE':([0,5,23,25,],[12,12,12,12,]),'$end':([1,3,4,6,7,8,10,11,12,13,18,21,24,26,],[-17,-2,-1,-6,-5,0,-7,-4,-3,-11,-15,-10,-16,-18,]),}
+_lr_action_items = {'DIGITS':([0,2,8,25,26,29,31,34,35,42,44,45,],[9,9,24,33,36,9,9,40,41,43,46,47,]),'VALUE_SEPARATOR':([3,5,6,7,9,10,11,12,13,15,17,19,21,22,24,27,30,32,33,36,38,40,41,43,46,47,],[-5,-7,-4,-3,-18,-1,-6,-17,-2,-11,28,-15,31,-28,-19,-10,-16,-27,-21,-20,-14,-23,-22,-24,-25,-26,]),'BEGIN_OBJECT':([0,2,29,31,],[1,1,1,1,]),'FALSE':([0,2,29,31,],[13,13,13,13,]),'END_OBJECT':([1,3,5,6,7,9,10,11,12,13,15,16,17,19,22,24,27,30,32,33,36,37,38,40,41,43,46,47,],[15,-5,-7,-4,-3,-18,-1,-6,-17,-2,-11,27,-12,-15,-28,-19,-10,-16,-27,-21,-20,-13,-14,-23,-22,-24,-25,-26,]),'BEGIN_ARRAY':([0,2,29,31,],[2,2,2,2,]),'NAME_SEPARATOR':([18,22,32,],[29,-28,-27,]),'E':([9,12,24,36,],[-18,25,-19,42,]),'PLUS':([25,42,],[35,44,]),'DECIMAL_POINT':([9,12,24,],[-18,26,-19,]),'QUOTATION_MARK':([0,1,2,4,23,28,29,31,],[4,4,4,22,32,4,4,4,]),'END_ARRAY':([2,3,5,6,7,9,10,11,12,13,15,19,20,21,22,24,27,30,32,33,36,39,40,41,43,46,47,],[19,-5,-7,-4,-3,-18,-1,-6,-17,-2,-11,-15,30,-8,-28,-19,-10,-16,-27,-21,-20,-9,-23,-22,-24,-25,-26,]),'STRING':([4,],[23,]),'NULL':([0,2,29,31,],[6,6,6,6,]),'TRUE':([0,2,29,31,],[7,7,7,7,]),'MINUS':([0,2,25,29,31,42,],[8,8,34,8,8,45,]),'$end':([3,5,6,7,9,10,11,12,13,14,15,19,22,24,27,30,32,33,36,40,41,43,46,47,],[-5,-7,-4,-3,-18,-1,-6,-17,-2,0,-11,-15,-28,-19,-10,-16,-27,-21,-20,-23,-22,-24,-25,-26,]),}
 
 _lr_action = {}
 for _k, _v in _lr_action_items.items():
@@ -16,7 +16,7 @@ for _k, _v in _lr_action_items.items():
       _lr_action[_x][_k] = _y
 del _lr_action_items
 
-_lr_goto_items = {'elements':([5,25,],[17,29,]),'string':([0,2,5,22,23,25,],[4,16,4,16,4,4,]),'object':([0,5,23,25,],[6,6,6,6,]),'number':([0,5,23,25,],[7,7,7,7,]),'value':([0,5,23,25,],[8,19,28,19,]),'members':([2,22,],[14,27,]),'pair':([2,22,],[15,15,]),'array':([0,5,23,25,],[10,10,10,10,]),}
+_lr_goto_items = {'elements':([2,31,],[20,39,]),'string':([0,1,2,28,29,31,],[10,18,10,18,10,10,]),'object':([0,2,29,31,],[11,11,11,11,]),'number':([0,2,29,31,],[3,3,3,3,]),'value':([0,2,29,31,],[14,21,38,21,]),'members':([1,28,],[16,37,]),'pair':([1,28,],[17,17,]),'integer':([0,2,29,31,],[12,12,12,12,]),'array':([0,2,29,31,],[5,5,5,5,]),}
 
 _lr_goto = {}
 for _k, _v in _lr_goto_items.items():
@@ -26,22 +26,32 @@ for _k, _v in _lr_goto_items.items():
 del _lr_goto_items
 _lr_productions = [
   ("S' -> value","S'",1,None,None,None),
-  ('value -> string','value',1,'p_expression_value_string','parser.py',9),
+  ('value -> string','value',1,'p_expression_value_string','parser.py',8),
   ('value -> FALSE','value',1,'p_expression_value_false','parser.py',12),
-  ('value -> TRUE','value',1,'p_expression_value_true','parser.py',15),
-  ('value -> NULL','value',1,'p_expression_value_null','parser.py',18),
-  ('value -> number','value',1,'p_expression_value_number','parser.py',21),
-  ('value -> object','value',1,'p_expression_value_object','parser.py',24),
-  ('value -> array','value',1,'p_expression_value_array','parser.py',27),
-  ('elements -> value','elements',1,'p_expression_elements_value','parser.py',30),
-  ('elements -> value VALUE_SEPARATOR elements','elements',3,'p_expression_elements_list','parser.py',33),
-  ('object -> BEGIN_OBJECT members END_OBJECT','object',3,'p_expression_object','parser.py',36),
-  ('object -> BEGIN_OBJECT END_OBJECT','object',2,'p_expression_object_empty','parser.py',39),
-  ('members -> pair','members',1,'p_expression_members','parser.py',42),
-  ('members -> pair VALUE_SEPARATOR members','members',3,'p_expression_members_list','parser.py',45),
-  ('pair -> string NAME_SEPARATOR value','pair',3,'p_expression_pair','parser.py',48),
-  ('array -> BEGIN_ARRAY END_ARRAY','array',2,'p_expression_array_empty','parser.py',51),
-  ('array -> BEGIN_ARRAY elements END_ARRAY','array',3,'p_expression_array_list','parser.py',54),
-  ('number -> DIGITS','number',1,'p_expression_number','parser.py',57),
-  ('string -> QUOTATION_MARK STRING QUOTATION_MARK','string',3,'p_expression_string','parser.py',60),
+  ('value -> TRUE','value',1,'p_expression_value_true','parser.py',16),
+  ('value -> NULL','value',1,'p_expression_value_null','parser.py',20),
+  ('value -> number','value',1,'p_expression_value_number','parser.py',24),
+  ('value -> object','value',1,'p_expression_value_object','parser.py',28),
+  ('value -> array','value',1,'p_expression_value_array','parser.py',32),
+  ('elements -> value','elements',1,'p_expression_elements_value','parser.py',36),
+  ('elements -> value VALUE_SEPARATOR elements','elements',3,'p_expression_elements_list','parser.py',40),
+  ('object -> BEGIN_OBJECT members END_OBJECT','object',3,'p_expression_object','parser.py',44),
+  ('object -> BEGIN_OBJECT END_OBJECT','object',2,'p_expression_object_empty','parser.py',48),
+  ('members -> pair','members',1,'p_expression_members','parser.py',52),
+  ('members -> pair VALUE_SEPARATOR members','members',3,'p_expression_members_list','parser.py',56),
+  ('pair -> string NAME_SEPARATOR value','pair',3,'p_expression_pair','parser.py',60),
+  ('array -> BEGIN_ARRAY END_ARRAY','array',2,'p_expression_array_empty','parser.py',64),
+  ('array -> BEGIN_ARRAY elements END_ARRAY','array',3,'p_expression_array_list','parser.py',68),
+  ('number -> integer','number',1,'p_expression_number','parser.py',72),
+  ('integer -> DIGITS','integer',1,'p_expression_integer','parser.py',76),
+  ('integer -> MINUS DIGITS','integer',2,'p_expression_integer_negative','parser.py',80),
+  ('number -> integer DECIMAL_POINT DIGITS','number',3,'p_expression_frac','parser.py',84),
+  ('number -> integer E DIGITS','number',3,'p_expression_exp','parser.py',88),
+  ('number -> integer E PLUS DIGITS','number',4,'p_expression_exp_positive','parser.py',92),
+  ('number -> integer E MINUS DIGITS','number',4,'p_expression_exp_negative','parser.py',96),
+  ('number -> integer DECIMAL_POINT DIGITS E DIGITS','number',5,'p_expression_frac_exp','parser.py',100),
+  ('number -> integer DECIMAL_POINT DIGITS E PLUS DIGITS','number',6,'p_expression_frac_exp_positive','parser.py',104),
+  ('number -> integer DECIMAL_POINT DIGITS E MINUS DIGITS','number',6,'p_expression_frac_exp_negative','parser.py',108),
+  ('string -> QUOTATION_MARK STRING QUOTATION_MARK','string',3,'p_expression_string','parser.py',112),
+  ('string -> QUOTATION_MARK QUOTATION_MARK','string',2,'p_expression_string_empty','parser.py',116),
 ]

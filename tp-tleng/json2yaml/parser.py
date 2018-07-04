@@ -18,7 +18,7 @@ def p_expression_value_true(subexpr):
 
 def p_expression_value_null(subexpr):
   'value : NULL'
-  subexpr[0] = NullExpression(subexpr[1])
+  subexpr[0] = EmptyExpression()
   
 def p_expression_value_number(subexpr):
   'value : number'
@@ -100,18 +100,21 @@ def p_expression_frac_exp(subexpr):
   'number : integer DECIMAL_POINT DIGITS E DIGITS'
   subexpr[0] = FracExpExpression(subexpr[1], subexpr[3], subexpr[5])
 
-def p_expression_exp_positive(subexpr):
+def p_expression_frac_exp_positive(subexpr):
   'number : integer DECIMAL_POINT DIGITS E PLUS DIGITS'
   subexpr[0] = FracExpExpression(subexpr[1], subexpr[3], subexpr[6])
 
-def p_expression_exp_negative(subexpr):
+def p_expression_frac_exp_negative(subexpr):
   'number : integer DECIMAL_POINT DIGITS E MINUS DIGITS'
   subexpr[0] = FracExpNegativeExpression(subexpr[1], subexpr[3], subexpr[6])
   
 def p_expression_string(subexpr):
   'string : QUOTATION_MARK STRING QUOTATION_MARK'
-  subexpr[0] = StringExpression(subexpr[2])  
+  subexpr[0] = StringExpression(subexpr[2])
 
+def p_expression_string_empty(subexpr):
+  'string : QUOTATION_MARK QUOTATION_MARK'
+  subexpr[0] = EmptyExpression()
  
 def p_error(p):
   message = "Hubo un error durante el parseo.\n"
@@ -131,9 +134,9 @@ def apply_parser(str):
   
 #exp = '[1, [2, 3], [1, [2, 3]]]'
 #exp = '[1, [3, 4], {"h":"o","l":"a"}]'
-exp = '[ {"clave1": "valor1", "clave 2": [ -125.74E-5, "Cadena 1" ], "- clave3": true}, "Cadena con salto de  Linea", [null, 35, {}] ]'
+#exp = '[ {"clave1": "valor1", "clave 2": [ -125.74E-5, "Cadena 1" ], "- clave3": true}, "Cadena con salto de  Linea", [null, 35, {}] ]'
 #exp = '{"h":"o", "h":"a"}'
-#exp = '1'
+exp = '"hola\\nnico"'
 expression = apply_parser(exp)
 result = expression.value([])
 print result
